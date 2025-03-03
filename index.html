@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>수면 질 향상을 위한 체크리스트</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: rgba(0, 100, 255, 0.82);
+            --secondary-color: #c0d6df;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif;
+            line-height: 1.4;
+            color: var(--dark-color);
+            background-color: #f1f5f9;
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin: 15px 0 10px 0;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+            font-size: 20px;
+        }
+
+        h3 {
+            color: var(--dark-color);
+            margin: 20px 0 5px 0;
+            font-size: 16px;
+        }
+
+        h4 {
+            color: var(--dark-color);
+            margin: 20px 0 5px 0;
+            font-size: 12px;
+        }
+
+        .instructions {
+            background-color: var(--light-color);
+            padding: 12px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            box-shadow: var(--box-shadow);
+            font-size: 14px;
+        }
+
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 5px;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .instructions li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .checklist-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .date-time {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .rating-title {
+            min-width: 80px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .rating-star {
+            cursor: pointer;
+            font-size: 24px;
+            color: #ddd;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .rating-star.active {
+            color: #ffc107;
+        }
+
+        .rating-value {
+            margin-left: 10px;
+            min-width: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .rating-desc {
+            margin-left: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+        }
+
+        .your-color {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+        }
+
+        .recommended-color {
+            background-color: #e8f5e9;
+            border: 1px solid #4caf50;
+        }
+
+        .recipe-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .recipe-item {
+            background-color: var(--light-color);
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .recipe-item.your-activity {
+            background-color: #e3f2fd;
+        }
+
+        .recipe-item.recommended {
+            background-color: #e8f5e9;
+        }
+
+        .recipe-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .recipe-label {
+            flex: 1;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .recipe-tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .tag-you {
+            background-color: #2196f3;
+        }
+
+        .tag-recommended {
+            background-color: #4caf50;
+        }
+
+        .save-btn {
+            display: block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 20px auto;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            -webkit-appearance: none;
+        }
+
+        .save-btn:hover, .save-btn:active {
+            background-color: #2a5282;
+        }
+
+        /* iOS 사파리용 최적화 */
+        @supports (-webkit-touch-callout: none) {
+            input[type="checkbox"] {
+                -webkit-appearance: none;
+                appearance: none;
+                background-color: white;
+                border: 2px solid #999;
+                border-radius: 3px;
+                width: 18px;
+                height: 18px;
+                position: relative;
+            }
+
+            input[type="checkbox"]:checked {
+                background-color: #3a6ea5;
+                border-color: #3a6ea5;
+            }
+
+            input[type="checkbox"]:checked:after {
+                content: "✓";
+                color: white;
+                position: absolute;
+                top: -2px;
+                left: 3px;
+                font-size: 14px;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="capture-area">
+    <header>
+        <h1>🌙 나의 수면 준비 체크리스트</h1>
+        <p>수면의 질을 향상시키기 위한 일일 체크리스트</p>
+    </header>
+
+    <div class="instructions">
+        <h3>📋 사용 방법</h3>
+        <ul>
+            <li>자기 전 1-2시간 전에 이 체크리스트를 작성합니다.</li>
+            <li>각 항목을 1-5점으로 평가합니다 (★ 클릭).</li>
+            <li>점수가 낮은 항목이 있다면 즉시 적용할 수 있는 "회복 레시피"를 실행합니다.</li>
+            <li>완료 후 하단의 '완료' 버튼을 클릭하여 체크리스트를 저장할 수 있습니다.</li>
+        </ul>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color your-color"></div>
+            <span>현재 하고 있는 활동</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color recommended-color"></div>
+            <span>코치 추천 활동</span>
+        </div>
+    </div>
+
+    <!-- 1. 몸의 긴장도 체크 섹션 -->
+    <div class="checklist-section">
+        <h2>1. 몸의 긴장도 체크</h2>
+        <div class="date-time">
+            <div id="tension-date"></div>
+            <div id="tension-time"></div>
+        </div>
+
+        <div id="body-tension">
+            <div class="rating">
+                <div class="rating-title">목</div>
+                <div class="rating-stars" data-part="neck">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <div class="rating-value" id="neck-value">0</div>
+                <span class="rating-desc">(1:매우 긴장~5:완전 이완)</span>
+            </div>
+
+            <div class="rating">
+                <div class="rating-title">어깨</div>
+                <div class="rating-stars" data-part="shoulders">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <div class="rating-value" id="shoulders-value">0</div>
+                <span class="rating-desc">(1:매우 긴장~5:완전 이완)</span>
+            </div>
+
+            <div class="rating">
+                <div class="rating-title">허리/등</div>
+                <div class="rating-stars" data-part="back">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <div class="rating-value" id="back-value">0</div>
+                <span class="rating-desc">(1:매우 긴장~5:완전 이완)</span>
+            </div>
+
+            <div class="rating">
+                <div class="rating-title">전신</div>
+                <div class="rating-stars" data-part="whole-body">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <div class="rating-value" id="whole-body-value">0</div>
+                <span class="rating-desc">(1:매우 긴장~5:완전 이완)</span>
+            </div>
+        </div>
+
+        <h3>💪 긴장 완화를 위한 회복 레시피</h3>
+        <div class="recipe-list">
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe1" />
+                <span class="recipe-label">요가/스트레칭</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe2" />
+                <span class="recipe-label">산책하기</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe3" />
+                <span class="recipe-label">마사지 볼 사용</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe4" />
+                <span class="recipe-label">방 청소/정돈</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- 2. 졸음 정도 체크 섹션 -->
+    <div class="checklist-section">
+        <h2>2. 졸음 정도 체크</h2>
+        <div class="date-time">
+            <div id="sleepiness-date"></div>
+            <div id="sleepiness-time"></div>
+        </div>
+
+        <div class="rating">
+            <div class="rating-title">현재 졸림</div>
+            <div class="rating-stars" data-part="sleepiness">
+                <span class="rating-star" data-value="1">★</span>
+                <span class="rating-star" data-value="2">★</span>
+                <span class="rating-star" data-value="3">★</span>
+                <span class="rating-star" data-value="4">★</span>
+                <span class="rating-star" data-value="5">★</span>
+            </div>
+            <div class="rating-value" id="sleepiness-value">0</div>
+            <span class="rating-desc">(1:안 졸림~5:금방 잠들 것)</span>
+        </div>
+
+        <h3>😴 졸림 증진을 위한 회복 레시피</h3>
+        <h4>섭취 관련</h4>
+        <div class="recipe-list">
+            <label class="recipe-item your-activity">
+                <input type="checkbox" class="recipe-checkbox" id="recipe6" />
+                <span class="recipe-label">수면제 복용</span>
+                <span class="recipe-tag tag-you">현재</span>
+            </label>
+            <label class="recipe-item your-activity">
+                <input type="checkbox" class="recipe-checkbox" id="recipe8" />
+                <span class="recipe-label">마그네슘 섭취</span>
+                <span class="recipe-tag tag-you">현재</span>
+            </label>
+            <label class="recipe-item your-activity">
+                <input type="checkbox" class="recipe-checkbox" id="recipe9" />
+                <span class="recipe-label">유산균 섭취</span>
+                <span class="recipe-tag tag-you">현재</span>
+            </label>
+        </div>
+
+        <h4>전자기기 관련</h4>
+        <div class="recipe-list">
+            <label class="recipe-item your-activity">
+                <input type="checkbox" class="recipe-checkbox" id="recipe5" />
+                <span class="recipe-label">폰 알림 차단</span>
+                <span class="recipe-tag tag-you">현재</span>
+            </label>
+            <label class="recipe-item your-activity">
+                <input type="checkbox" class="recipe-checkbox" id="recipe7" />
+                <span class="recipe-label">폰 멀리 두기</span>
+                <span class="recipe-tag tag-you">현재</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe11" />
+                <span class="recipe-label">전자기기 끄기</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe12" />
+                <span class="recipe-label">침대 옆 모니터 치우기</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+        </div>
+
+        <h4>기타</h4>
+        <div class="recipe-list">
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe13" />
+                <span class="recipe-label">요가나 몸 이완 동작</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- 3. 수면 환경 체크 섹션 -->
+    <div class="checklist-section">
+        <h2>3. 수면 환경 체크</h2>
+        <div class="date-time">
+            <div id="environment-date"></div>
+            <div id="environment-time"></div>
+        </div>
+
+        <div id="sleep-environment">
+            <div class="rating">
+                <div class="rating-title">소음</div>
+                <div class="rating-stars" data-part="noise">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <div class="rating-value" id="noise-value">0</div>
+                <span class="rating-desc">(1:시끄러움~5:조용함)</span>
+            </div>
+
+            <div class="rating">
+                <div class="rating-title">빛</div>
+                <div class="rating-stars" data-part="light">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <div class="rating-value" id="light-value">0</div>
+                <span class="rating-desc">(1:밝음~5:어두움)</span>
+            </div>
+
+            <div class="rating">
+                <div class="rating-title">온도</div>
+                <div class="rating-stars" data-part="temperature">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <div class="rating-value" id="temperature-value">0</div>
+                <span class="rating-desc">(1:덥거나 추움~5:적절)</span>
+            </div>
+        </div>
+
+        <h3>🛏️ 환경 개선을 위한 회복 레시피</h3>
+        <div class="recipe-list">
+            <label class="recipe-item your-activity">
+                <input type="checkbox" class="recipe-checkbox" id="recipe14" />
+                <span class="recipe-label">암막 커튼 사용</span>
+                <span class="recipe-tag tag-you">현재</span>
+            </label>
+            <label class="recipe-item your-activity">
+                <input type="checkbox" class="recipe-checkbox" id="recipe16" />
+                <span class="recipe-label">가습기 체크</span>
+                <span class="recipe-tag tag-you">현재</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe15" />
+                <span class="recipe-label">온도/습도 확인</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe17" />
+                <span class="recipe-label">전자기기 치우기</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- 4. 스트레스 요인 체크 섹션 -->
+    <div class="checklist-section">
+        <h2>4. 스트레스 요인 체크</h2>
+        <div class="date-time">
+            <div id="stress-date"></div>
+            <div id="stress-time"></div>
+        </div>
+
+        <div class="rating">
+            <div class="rating-title">걱정/생각</div>
+            <div class="rating-stars" data-part="stress">
+                <span class="rating-star" data-value="1">★</span>
+                <span class="rating-star" data-value="2">★</span>
+                <span class="rating-star" data-value="3">★</span>
+                <span class="rating-star" data-value="4">★</span>
+                <span class="rating-star" data-value="5">★</span>
+            </div>
+            <div class="rating-value" id="stress-value">0</div>
+            <span class="rating-desc">(1:매우 많음~5:거의 없음)</span>
+        </div>
+
+        <h3>🧘 스트레스 완화를 위한 회복 레시피</h3>
+        <div class="recipe-list">
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe18" />
+                <span class="recipe-label">방 정리/청소하기</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe19" />
+                <span class="recipe-label">산책하기</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe20" />
+                <span class="recipe-label">호흡/이완 명상</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+            <label class="recipe-item recommended">
+                <input type="checkbox" class="recipe-checkbox" id="recipe21" />
+                <span class="recipe-label">걱정거리 적어두기</span>
+                <span class="recipe-tag tag-recommended">추천</span>
+            </label>
+        </div>
+    </div>
+</div>
+
+<button class="save-btn" id="complete-btn">저장하기</button>
+
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit' };
+
+        const dateStr = now.toLocaleDateString('ko-KR', dateOptions);
+        const timeStr = now.toLocaleTimeString('ko-KR', timeOptions);
+
+        document.querySelectorAll('[id$="-date"]').forEach(el => {
+            el.textContent = dateStr;
+        });
+        document.querySelectorAll('[id$="-time"]').forEach(el => {
+            el.textContent = timeStr;
+        });
+    }
+
+    updateDateTime();
+
+    setInterval(updateDateTime, 30000);
+
+    document.querySelectorAll('.rating-stars').forEach(stars => {
+        stars.querySelectorAll('.rating-star').forEach(star => {
+            star.addEventListener('click', function(e) {
+                e.preventDefault();
+                handleRating(star, stars);
+            });
+            star.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                handleRating(star, stars);
+            }, {passive: false});
+        });
+    });
+
+    function handleRating(star, stars) {
+        const value = parseInt(star.getAttribute('data-value'));
+        const part = stars.getAttribute('data-part');
+        const valueDisplay = document.getElementById(`${part}-value`);
+
+        stars.querySelectorAll('.rating-star').forEach(s => {
+            const starValue = parseInt(s.getAttribute('data-value'));
+            if (starValue <= value) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+
+        valueDisplay.textContent = value;
+    }
+
+    document.getElementById('complete-btn').addEventListener('click', takeScreenshot);
+
+    function takeScreenshot() {
+        const contentElement = document.getElementById('capture-area');
+        const completeBtn = document.getElementById('complete-btn');
+
+        completeBtn.disabled = true;
+
+        html2canvas(contentElement, {
+            backgroundColor: '#f1f5f9',
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            scrollX: 0,
+            scrollY: -window.scrollY
+        })
+            .then(canvas => {
+                completeBtn.disabled = false;
+
+                canvas.toBlob(function(blob) {
+                    const userAgent = navigator.userAgent;
+                    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+
+                    const date = new Date();
+                    const fileName = `수면체크리스트_${date.getFullYear()}${(date.getMonth() + 1)
+                        .toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}.png`;
+
+                    if (isIOS) {
+                        const file = new File([blob], fileName, { type: "image/png" });
+                        if (navigator.share) {
+                            navigator.share({
+                                title: "수면체크리스트",
+                                files: [file]
+                            }).catch(error => console.error("공유 실패", error));
+                        } else {
+                            const url = URL.createObjectURL(blob);
+                            window.open(url, "_blank");
+                        }
+                    } else {
+                        const link = document.createElement('a');
+                        link.download = fileName;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                    }
+                }, 'image/png');
+            })
+            .catch(error => {
+                console.error('스크린샷 생성 중 오류 발생:', error);
+                completeBtn.disabled = false;
+                alert('스크린샷을 생성하는데 문제가 발생했습니다. 다시 시도해주세요.');
+            });
+    }
+</script>
+</body>
+</html>
